@@ -1,39 +1,70 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,300;1,400&display=swap");
+document.querySelector("button").addEventListener("click", getFetch);
 
-img {
-  display: block;
-  margin: 0 auto;
+function getFetch() {
+  const choice = document.querySelector("input").value;
+  const url = `https://api.openbrewerydb.org/breweries?by_city=${choice}`;
+
+  fetch(url)
+    .then((res) => res.json()) // parse response as JSON
+    .then((data) => {
+      const list = document.createElement("ul");
+      data.forEach((obj) => {
+        const websiteUrl = obj.website_url || "";
+        const websiteLink = websiteUrl
+          ? `<a href="${websiteUrl}" target="_blank">${websiteUrl}</a>`
+          : "";
+
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `<strong>Name:</strong> ${
+          obj.name
+        } <br><strong>Street:</strong> ${
+          obj.street || "N/A"
+        } <br><strong>Website:</strong> ${websiteLink || "N/A"}`;
+        list.appendChild(listItem);
+        list.appendChild(document.createElement("br"));
+      });
+
+      document.querySelector("#name").innerHTML = "";
+      document.querySelector("#name").appendChild(list);
+    })
+    .catch((err) => {
+      console.log(`error ${err}`);
+    });
 }
 
-h1 {
-  color: wheat;
-}
+const form = document.querySelector("form");
+form.addEventListener("submit", handleSubmit);
 
-h2 {
-  color: wheat;
-}
+function handleSubmit(event) {
+  event.preventDefault();
+  const choice = document.querySelector("input").value;
+  const url = `https://api.openbrewerydb.org/breweries?by_city=${choice}`;
 
-ul {
-  list-style: none;
-  text-align: left;
-}
+  fetch(url)
+    .then((res) => res.json()) // parse response as JSON
+    .then((data) => {
+      const list = document.createElement("ul");
+      data.forEach((obj) => {
+        const websiteUrl = obj.website_url || "";
+        const websiteLink = websiteUrl
+          ? `<a href="${websiteUrl}" target="_blank">${websiteUrl}</a>`
+          : "";
 
-body {
-  background-image: url("https://res.cloudinary.com/de823dozq/image/upload/v1679691394/brewery_sgh2co.jpg");
-  background-size: auto cover fixed;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  text-align: center;
-  color: white;
-  font-size: 20px;
-  font-family: "Poppins", sans-serif;
-}
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `<strong>Name:</strong> ${
+          obj.name
+        } <br><strong>Street:</strong> ${
+          obj.street || "N/A"
+        } <br><strong>Website:</strong> ${websiteLink || "N/A"}`;
+        list.appendChild(listItem);
+        list.appendChild(document.createElement("br"));
+      });
 
-@media all and (max-width: 700px) {
-  body {
-    background-image: auto contain;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    width: 100%;
-  }
+      const nameContainer = document.querySelector("#name");
+      nameContainer.innerHTML = "";
+      nameContainer.appendChild(list);
+    })
+    .catch((err) => {
+      console.log(`error ${err}`);
+    });
 }
