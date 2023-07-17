@@ -1,64 +1,39 @@
-let div = document.createElement("div")
-div.style.textAlign="center"
-let input = document.createElement("input");
-input.setAttribute("type","text")
-input.setAttribute("id","cityInput")
-input.setAttribute("placeholder","search by city ")
-let btn = document.createElement("button")
-btn.setAttribute("type","button")
-btn.setAttribute("id","bycity")
-btn.classList.add("btn","btn-primary");
-btn.innerHTML="search"
-btn.addEventListener("click",byCity)
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,300;1,400&display=swap");
 
-let div1 = document.createElement("div");
-div1.setAttribute("id","bre");
+img {
+  display: block;
+  margin: 0 auto;
+}
 
-div.append(input,btn,div1);
-document.body.append(div);
+h1 {
+  color: wheat;
+}
 
-async function byCity(){
-    const choice = document.getElementById('cityInput').value
-    console.log(choice)
-    const url = `https://api.openbrewerydb.org/breweries?by_city=${choice}`
-    
-    let res= await fetch(url);
-    let res1=await res.json();
-    console.log(res1);
-    
-  
-          try {
-            res1.forEach(brewery => {
-                let div = document.createElement("div")
-                div.innerHTML=
-            ` 
-            <div class="card text-white bg-dark mb-4" style="max-width:18rem; margin-left:41vw">
-        
-        <div class="card-body">
-            <h56 class="card-title">Name:${brewery.name}</h6>
-            <h6 class="card-title">Type:${brewery.brewery_type}</h6>
-            <h6 class="card-title">Address:${brewery.address_2}</h6>
-            <h6 class="card-title">Website:${brewery.website_url}</h6>
-            <h6 class="card-title">Phone no:${brewery.phone}</h6>
-            
-        </div>
-        </div>
-        
-        `
-                document.getElementById('bre').append(div)
-                console.log(brewery.name)
-                console.log(brewery.brewery_type);
-                console.log(brewery.address_2);
-                console.log(brewery.website_url);
-                console.log(brewery.phone);
-              })
-            
-          } catch (error) {
-            console.log(error)
-            
-          }
-         
-        
-       
-        }
-  
+h2 {
+  color: wheat;
+}
+
+ul {
+  list-style: none;
+  text-align: left;
+}
+
+body {
+  background-image: url("https://res.cloudinary.com/de823dozq/image/upload/v1679691394/brewery_sgh2co.jpg");
+  background-size: auto cover fixed;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  text-align: center;
+  color: white;
+  font-size: 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+@media all and (max-width: 700px) {
+  body {
+    background-image: auto contain;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    width: 100%;
+  }
+}
